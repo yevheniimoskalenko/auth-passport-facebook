@@ -9,11 +9,15 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="login" type="primary" round>Войти</el-button>
+        <a href="/auth/facebook">войти через facebook</a>
+        <nuxt-link to="/create">Зарегистрироватся</nuxt-link>
       </el-form-item>
     </el-form>
   </el-card>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {

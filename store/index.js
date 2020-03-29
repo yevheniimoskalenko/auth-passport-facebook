@@ -1,15 +1,17 @@
 export const state = () => ({
+    error: null
 })
-export const getters = {}
-export const mutations = {}
-export const actions = {
-    async register({
-        commit
-    }, payload) {
-        try {
-            await this.$axios.$post('/api/login', payload)
-        } catch (e) {
-
-        }
+export const getters = {
+    error: state => state.error
+}
+export const mutations = {
+    SetError(state, error) {
+        state.error = error
+        console.log(error)
+    },
+    clearError(state) {
+        state.error = null
     }
+}
+export const actions = {
 }
