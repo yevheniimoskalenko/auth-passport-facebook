@@ -1,47 +1,77 @@
 <template>
   <el-card class="box-card">
-    <el-form ref="form" :model="controls" class="form">
-      <el-form-item label="email">
+    <el-form ref="form" :model="controls" class="form" :rules="rules">
+      <h2>Увійти в свій профіль</h2>
+      <el-form-item label="Електроний адрес" prop="email">
         <el-input v-model="controls.email"></el-input>
       </el-form-item>
-      <el-form-item label="password">
-        <el-input v-model="controls.password"></el-input>
+      <el-form-item label="Пароль" prop="password" class="mb">
+        <el-input v-model="controls.password" type="password" show-password></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="login" type="primary" round>Войти</el-button>
-        <a href="/auth/facebook">войти через facebook</a>
-        <nuxt-link to="/create">Зарегистрироватся</nuxt-link>
+        <el-button @click="login" type="primary" round :loading="loading">Увійти</el-button>
+        <a href="/auth/facebook" class="facebook">&nbsp;</a>
+        <nuxt-link to="/create">Створити профіль</nuxt-link>
+        <el-button @click="fb">fb</el-button>
       </el-form-item>
     </el-form>
   </el-card>
 </template>
 <script>
-import axios from "axios";
-
 export default {
+  auth: false,
+  head: {
+    title: "Вхід на сайт"
+  },
   data() {
     return {
+      loading: false,
       controls: {
         email: "",
         password: ""
+      },
+      rules: {
+        email: [
+          {
+            required: true,
+            message: "Електроний адрес не повинен бути пустим."
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: "Пароль не повинен бути пустим."
+          }
+        ]
       }
     };
   },
   methods: {
+    fb() {
+      this.$auth.loginWith("facebook");
+    },
     login() {
       this.$refs.form.validate(async valid => {
+        this.loading = true;
         if (valid) {
           try {
             const dataForm = {
               email: this.controls.email,
               password: this.controls.password
             };
-            await this.$store.dispatch("register", dataForm);
+            let response = await this.$auth.loginWith("local", {
+              data: dataForm
+            });
+            console.log(response);
+            // await this.$store.dispatch("Auth/AuthForm", dataForm);
+
+            this.$router.push("/panel");
           } catch (e) {
             console.log(e);
           }
         }
       });
+      this.loading = false;
     }
   }
 };

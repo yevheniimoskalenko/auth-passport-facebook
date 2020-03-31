@@ -41,8 +41,32 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-vuex-localstorage',
+    '@nuxtjs/auth'
   ],
+  router: {
+    middleware: ['auth']
+  },
+  auth: {
+    strategies: {
+      facebook: {
+        client_id: '228457404969225',
+        userinfo_endpoint: 'https://graph.facebook.com/v2.12/me?fields=about,name,picture{url},email,birthday',
+        scope: ['public_profile', 'email', 'user_birthday']
+      },
+      local: {
+        endpoints: {
+          login: { url: '/api/auth', method: 'post', propertyName: 'token' },
+          logout: { url: '/api/auth/logout', method: 'post' },
+          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+        // autoFetchUser: true
+      },
+    }
+  },
   axios: {
     // proxyHeaders: false
   },

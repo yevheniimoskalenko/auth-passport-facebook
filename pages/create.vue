@@ -23,14 +23,21 @@
         ></el-input>
       </el-form-item>
       <el-form-item prop="success_rules">
-        <el-checkbox-group v-model="controls.success_rules">
-          <el-checkbox label="Згоден з правилами" name="checkbox"></el-checkbox>
-        </el-checkbox-group>
+        <el-checkbox label="Згоден з" name="checkbox" v-model="controls.success_rules"></el-checkbox>
+        <el-button type="text" @click="dialogRules = true">правилами</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button @click="login" type="primary" round>Зарегистрироватся</el-button>
+        <el-button @click="login" type="primary" round :loading="loading">Зареєструватися</el-button>
         <nuxt-link to="/">Увійти</nuxt-link>
       </el-form-item>
+      <el-dialog title="Правила сайту" :visible.sync="dialogRules">
+        <div class="dialog">
+          <ol>
+            <li>Всі користувачі сайту повіні прийняти зходу цих правил.</li>
+            <li></li>
+          </ol>
+        </div>
+      </el-dialog>
     </el-form>
   </el-card>
 </template>
@@ -43,11 +50,13 @@ export default {
   },
   data() {
     return {
+      dialogRules: false,
+      loading: false,
       controls: {
         email: "",
         password: "",
         full_name: "",
-        success_rules: false,
+        success_rules: [],
         phoneNumber: "",
         adress: ""
       },
@@ -78,6 +87,14 @@ export default {
             required: true,
             message: "Ведіть будь ласка Ваший номере телефону"
           }
+        ],
+        success_rules: [
+          {
+            type: "array",
+            required: true,
+            message: "Підтвердіть флажком, що ви згодні з правилами",
+            trigger: "change"
+          }
         ]
       }
     };
@@ -85,6 +102,7 @@ export default {
   methods: {
     login() {
       this.$refs.form.validate(async valid => {
+        this.loading = true;
         if (valid) {
           const dataForm = {
             email: this.controls.email,
@@ -94,19 +112,16 @@ export default {
             phoneNumber: this.controls.phoneNumber
           };
           try {
-            await this.$store.dispatch("create/createUser", dataForm);
-            this.controls.email = "";
-            this.controls.password = "";
-            this.controls.full_name = "";
-            this.controls.adress = "";
-            this.controls.phoneNumber = "";
+            await this.$store.dispatch("Auth/createUser", dataForm);
             this.$message.success("Ви успішно зареєстровані!");
+            this.$router.push("/");
           } catch (e) {
             // console.log(e);
           }
         } else {
           this.$message.warning("Форма заповнена не вірно!");
         }
+        this.loading = false;
       });
     }
   },

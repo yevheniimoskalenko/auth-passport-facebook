@@ -11,14 +11,23 @@
     "generate": "nuxt generate",
     "test": "jest"
   },
+  "engines": {
+    "node": "12.x"
+  },
   "dependencies": {
+    "@nuxtjs/auth": "^4.9.0",
     "@nuxtjs/axios": "^5.9.6",
     "bcrypt-nodejs": "0.0.3",
+    "cookie": "^0.4.0",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
     "express": "^4.16.4",
+    "express-jwt": "^5.3.1",
+    "js-cookie": "^2.2.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.6",
     "nuxt": "^2.0.0",
+    "nuxt-vuex-localstorage": "^1.2.6",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "vue-the-mask": "^0.11.1"
