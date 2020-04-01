@@ -1,5 +1,5 @@
 <template>
-  <div>Каталог</div>
+  <div>Учасик</div>
 </template>
 <script>
 export default {

@@ -1,9 +1,10 @@
 <template>
-  <div></div>
+  <div>Квитки</div>
 </template>
 <script>
 export default {
-  middleware: "auth"
+  layout: "panel",
+  middleware: ["auth"]
 };
 </script>
 <style lang="scss" scoped>

@@ -28,7 +28,7 @@
       </el-form-item>
       <el-form-item>
         <el-button @click="login" type="primary" round :loading="loading">Зареєструватися</el-button>
-        <nuxt-link to="/">Увійти</nuxt-link>
+        <nuxt-link to="/auth/login">Увійти</nuxt-link>
       </el-form-item>
       <el-dialog title="Правила сайту" :visible.sync="dialogRules">
         <div class="dialog">
@@ -44,6 +44,7 @@
 <script>
 import { mask } from "vue-the-mask";
 export default {
+  auth: false,
   directives: { mask },
   head: {
     title: "Зареєструватися на сайті"
@@ -114,7 +115,7 @@ export default {
           try {
             await this.$store.dispatch("Auth/createUser", dataForm);
             this.$message.success("Ви успішно зареєстровані!");
-            this.$router.push("/");
+            this.$router.push("/login");
           } catch (e) {
             // console.log(e);
           }

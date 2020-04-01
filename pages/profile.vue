@@ -1,8 +1,11 @@
 <template>
-  <div>Каталог</div>
+  <div>profile</div>
 </template>
 <script>
 export default {
+  head: {
+    title: "Моя сторінка"
+  },
   layout: "panel",
   middleware: ["auth"]
 };

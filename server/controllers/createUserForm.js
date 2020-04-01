@@ -1,7 +1,7 @@
 const User = require("../models/user.model")
-// const jwt = require('express-jwt')
-// const jsonwebtoken = require('jsonwebtoken')
+const jsonwebtoken = require('jsonwebtoken')
 const bcrypt = require('bcrypt-nodejs')
+const keys = require("../keys")
 const salt = bcrypt.genSaltSync(10)
 module.exports.createUserForm = async (req, res) => {
     const { email, password, name, adress, phoneNumber } = req.body
@@ -23,17 +23,19 @@ module.exports.createUserForm = async (req, res) => {
 module.exports.auth = async (req, res) => {
     const { email, password } = req.body
     const candidat = await User.findOne({ email })
-    // console.log(password)
-    // if (candidat) {
-    //     bcrypt.compare(password, candidat.password, function (err, result) {
-    //         if (result) {
-    //             return res.json({
-    //                 email: candidat.email,
-    //                 id: candidat._id
-    //             })
-    //         } else {
-    //             return res.status(401).json({ message: "Електрона пошта ведена не вірно або пароль." })
-    //         }
-    //     });
-    // }
-} 
+    if (candidat) {
+        bcrypt.compare(password, candidat.password, function (err, result) {
+            if (result) {
+                const token = jsonwebtoken.sign({
+                    email,
+                    id: candidat._id
+                }, keys.SECRET, { expiresIn: 60 * 60 * 1000 })
+                return res.json({ token })
+            } else {
+                return res.status(401).json({ message: "Електрона пошта ведена не вірно або пароль." })
+            }
+        });
+    } else {
+        return res.status(401).json({ message: "Електрона пошта ведена не вірно або пароль." })
+    }
+}

@@ -1,86 +1,29 @@
 <template>
-  <el-card class="box-card">
-    <el-form ref="form" :model="controls" class="form" :rules="rules">
-      <h2>Увійти в свій профіль</h2>
-      <el-form-item label="Електроний адрес" prop="email">
-        <el-input v-model="controls.email"></el-input>
-      </el-form-item>
-      <el-form-item label="Пароль" prop="password" class="mb">
-        <el-input v-model="controls.password" type="password" show-password></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="login" type="primary" round :loading="loading">Увійти</el-button>
-        <a href="/auth/facebook" class="facebook">&nbsp;</a>
-        <nuxt-link to="/create">Створити профіль</nuxt-link>
-        <el-button @click="fb">fb</el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+  <div>
+    <el-carousel :interval="5000" arrow="always" height="650px">
+      <el-carousel-item v-for="item in 4" :key="item"></el-carousel-item>
+    </el-carousel>
+    <nuxt-link to="/auth/login">Увійти</nuxt-link>
+    <nuxt-link to="/auth/create">Створити контакт</nuxt-link>
+  </div>
 </template>
 <script>
-export default {
-  auth: false,
-  head: {
-    title: "Вхід на сайт"
-  },
-  data() {
-    return {
-      loading: false,
-      controls: {
-        email: "",
-        password: ""
-      },
-      rules: {
-        email: [
-          {
-            required: true,
-            message: "Електроний адрес не повинен бути пустим."
-          }
-        ],
-        password: [
-          {
-            required: true,
-            message: "Пароль не повинен бути пустим."
-          }
-        ]
-      }
-    };
-  },
-  methods: {
-    fb() {
-      this.$auth.loginWith("facebook");
-    },
-    login() {
-      this.$refs.form.validate(async valid => {
-        this.loading = true;
-        if (valid) {
-          try {
-            const dataForm = {
-              email: this.controls.email,
-              password: this.controls.password
-            };
-            let response = await this.$auth.loginWith("local", {
-              data: dataForm
-            });
-            console.log(response);
-            // await this.$store.dispatch("Auth/AuthForm", dataForm);
-
-            this.$router.push("/panel");
-          } catch (e) {
-            console.log(e);
-          }
-        }
-      });
-      this.loading = false;
-    }
-  }
-};
+export default {};
 </script>
-<style>
-.box-card {
-  width: 500px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
+<style lang="scss" scoped>
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 18px;
+  opacity: 0.75;
+  line-height: 300px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
 }
 </style>
