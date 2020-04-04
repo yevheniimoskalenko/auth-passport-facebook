@@ -25,37 +25,8 @@
 <script>
 export default {
   layout: "panel",
-  middleware: ["auth"],
-  head: {
-    title: "Каталог товарів на розіграш"
-  },
-  methods: {
-    openPage() {
-      this.$router.push(`/post/3312321`);
-    }
-  }
+  middleware: ["auth"]
 };
 </script>
 <style lang="scss" scoped>
-.catalog__item {
-  width: 450px;
-  cursor: pointer;
-}
-.ct_img {
-  width: 100%;
-  display: block;
-}
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.footer {
-  border-top: 1px solid #ccc;
-  padding: 10px 0;
-  margin: 20px 0;
-}
-.clearfix:after {
-  clear: both;
-}
 </style>

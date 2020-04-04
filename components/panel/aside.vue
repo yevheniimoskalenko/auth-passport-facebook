@@ -12,6 +12,12 @@
       <i class="el-icon-collection-tag"></i>
       <span>Учасник в розіграші</span>
     </el-menu-item>
+    <template v-if="$auth.$state.user.admin === 1">
+      <el-menu-item index="admin/create">
+        <i class="el-icon-bank-card"></i>
+        <span>Створити товар</span>
+      </el-menu-item>
+    </template>
     <el-menu-item index="/ticket">
       <i class="el-icon-bank-card"></i>
       <span>Придбати квитки</span>

@@ -26,6 +26,9 @@ const UserSchema = new Schema({
     },
     phoneNumber: {
         type: String
+    },
+    admin: {
+        type: Number
     }
 })
 module.exports = model('user', UserSchema)

@@ -14,7 +14,8 @@ module.exports.createUserForm = async (req, res) => {
             password: bcrypt.hashSync(password, salt),
             name,
             adress,
-            phoneNumber
+            phoneNumber,
+            admin: 0
         })
         await user.save()
         return res.status(201).json(user)
@@ -28,7 +29,8 @@ module.exports.auth = async (req, res) => {
             if (result) {
                 const token = jsonwebtoken.sign({
                     email,
-                    id: candidat._id
+                    id: candidat._id,
+                    admin: candidat.admin
                 }, keys.SECRET, { expiresIn: 60 * 60 * 1000 })
                 return res.json({ token })
             } else {

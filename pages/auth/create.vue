@@ -115,20 +115,13 @@ export default {
           try {
             await this.$store.dispatch("Auth/createUser", dataForm);
             this.$message.success("Ви успішно зареєстровані!");
-            this.$router.push("/login");
-          } catch (e) {
-            // console.log(e);
-          }
+            this.$router.push("/auth/login");
+          } catch (e) {}
         } else {
           this.$message.warning("Форма заповнена не вірно!");
         }
         this.loading = false;
       });
-    }
-  },
-  computed: {
-    error() {
-      return this.$store.getters.error;
     }
   }
 };

@@ -11,7 +11,6 @@
       <el-form-item>
         <el-button @click="login" type="primary" round :loading="loading">Увійти</el-button>
         <nuxt-link to="/auth/create">Створити профіль</nuxt-link>
-        <!-- <el-button @click="fb">fb</el-button> -->
       </el-form-item>
     </el-form>
   </el-card>
@@ -32,6 +31,10 @@ export default {
       rules: {
         email: [
           {
+            type: "email",
+            message: "Ведений не коректний електроний адрес"
+          },
+          {
             required: true,
             message: "Електроний адрес не повинен бути пустим."
           }
@@ -46,9 +49,6 @@ export default {
     };
   },
   methods: {
-    // fb() {
-    //   this.$auth.loginWith("facebook");
-    // },
     login() {
       this.$refs.form.validate(async valid => {
         this.loading = true;
@@ -63,8 +63,10 @@ export default {
             });
             this.$router.push("/profile");
           } catch (e) {
-            console.log(e);
+            await this.$store.dispatch("Auth/fetchError", e);
           }
+        } else {
+          this.$message.warning("Форма заповнена не вірно!");
         }
       });
       this.loading = false;

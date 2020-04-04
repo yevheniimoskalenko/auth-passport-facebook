@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie'
-
 export const state = () => ({
     person: null
 })
@@ -20,13 +18,11 @@ export const actions = {
             throw e
         }
     },
-    async AuthForm({ commit }, payload) {
+    async fetchError({ commit }, payload) {
         try {
-            const person = await this.$axios.$post('/api/auth', payload)
-            commit("setPerson", person)
-            Cookies.set('person', person)
+            await commit('SetError', payload, { root: true })
         } catch (e) {
-            commit("SetError", e, { root: true })
+            console.log(e)
         }
     }
 }

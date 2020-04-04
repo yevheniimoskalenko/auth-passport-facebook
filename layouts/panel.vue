@@ -5,9 +5,13 @@
         <app-Aside />
       </el-aside>
       <el-container>
-        <el-header>Header</el-header>
+        <!-- <el-header>Header</el-header> -->
         <el-main>
-          <nuxt />
+          <el-row :gutter="24" type="flex" justify="center">
+            <el-col :span="24" :xs="16" :sm="16" :xl="20" :lg="24" :md="24">
+              <nuxt />
+            </el-col>
+          </el-row>
         </el-main>
         <el-footer>Footer</el-footer>
       </el-container>
@@ -28,14 +32,6 @@ export default {
   watch: {
     error(value) {
       this.$message.error(value.response.data.message);
-    }
-  },
-  methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
     }
   }
 };
