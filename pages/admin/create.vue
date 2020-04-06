@@ -1,31 +1,32 @@
 <template>
-  <div>
+  <div class="form-create">
     <el-form :model="controls" ref="form" :rules="rules">
-      <el-form-item label="title" prop="title">
+      <el-form-item label="Назва товару" prop="title">
         <el-input v-model="controls.title" />
       </el-form-item>
-      <el-form-item label="description" prop="description">
-        <el-input type="textarea" class="text-real" v-model="controls.description" />
+      <el-form-item label="Опис" prop="description">
+        <el-input type="textarea" class="text-real" v-model="controls.description" :rows="5" />
       </el-form-item>
-      <el-form-item label="img src" prop="img">
+      <el-form-item label="Посилання на зображення" prop="img">
         <el-input v-model="controls.img" />
       </el-form-item>
-      <el-form-item label="amount" prop="amount">
+      <el-form-item label="кількість учасників у розіграші" prop="amount">
         <el-input v-model="controls.amount" />
       </el-form-item>
-      <el-button @click="create">SEND</el-button>
+      <el-button @click="create" :loading="loading" round type="primary">Створити</el-button>
     </el-form>
   </div>
 </template>
 <script>
 export default {
   layout: "panel",
-  middleware: ["auth"],
+  middleware: ["admin", "auth"],
   head: {
     title: "Створення товару"
   },
   data() {
     return {
+      loading: false,
       controls: {
         title: "",
         description: "",
@@ -33,19 +34,31 @@ export default {
         img: ""
       },
       rules: {
-        title: [{ required: true }],
-        description: [{ required: true }],
-        amount: [
-          { required: true }
-          //   { type: "number", message: "age must be a number" }
+        title: [
+          { required: true, message: "Назва товару повина бути заповнена" }
         ],
-        img: [{ required: true }]
+        description: [
+          { required: true, message: "Опис повина бути заповнена" }
+        ],
+        amount: [
+          {
+            required: true,
+            message: "Кількість учасників повино бути заповнено обов`язково"
+          }
+        ],
+        img: [
+          {
+            required: true,
+            message: "Посилання на зображення повино бути вказане на сайт"
+          }
+        ]
       }
     };
   },
   methods: {
     create() {
       this.$refs.form.validate(async valid => {
+        this.loading = true;
         const formData = {
           title: this.controls.title,
           description: this.controls.description,
@@ -53,12 +66,21 @@ export default {
           img: this.controls.img
         };
         if (valid) {
-          await this.$store.dispatch("admin/createCatalog", formData);
+          try {
+            await this.$store.dispatch("admin/createCatalog", formData);
+            this.$message.success("Ви успішно створили товар для розіграшу!");
+          } catch (e) {
+            this.$message.warning("Форма заповнена не вірно!");
+          }
         }
       });
+      this.loading = false;
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.form-create {
+  width: 600px;
+}
 </style>

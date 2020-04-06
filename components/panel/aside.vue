@@ -13,8 +13,8 @@
       <span>Учасник в розіграші</span>
     </el-menu-item>
     <template v-if="$auth.$state.user.admin === 1">
-      <el-menu-item index="admin/create">
-        <i class="el-icon-bank-card"></i>
+      <el-menu-item index="/admin/create">
+        <i class="el-icon-plus"></i>
         <span>Створити товар</span>
       </el-menu-item>
     </template>
