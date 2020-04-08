@@ -7,8 +7,8 @@ export const mutations = {
     }
 }
 export const getters = {
-    form:(state) => {
-       return state.form
+    form: (state) => {
+        return state.form
     }
 }
 export const actions = {
@@ -18,6 +18,7 @@ export const actions = {
             commit("form", form)
         } catch (e) {
             commit('SetError', e, { root: true })
+            throw e
         }
     }
 }

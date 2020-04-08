@@ -7,7 +7,7 @@
       <img :src="catalog.url_img" class="catalog_img" />
     </div>
     {{catalog.description}}
-    <el-button @click="openPage">push</el-button>
+    <el-button round @click="openPost">Открыть</el-button>
     <footer>{{catalog.amount}}</footer>
   </el-card>
 </template>
@@ -22,10 +22,9 @@ export default {
     }
   },
   methods: {
-    openPage() {
-      let id = catalog;
-      console.log(id);
-      // this.$router.push(`/catalog/${id}`);
+    openPost() {
+      const id = this.catalog._id;
+      this.$router.push(`/catalog/${id}`);
     }
   }
 };

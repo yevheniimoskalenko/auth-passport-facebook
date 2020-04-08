@@ -13,6 +13,7 @@ export const actions = {
             await this.$axios.$post('/admin/create', payload)
         } catch (e) {
             commit('SetError', e, { root: true })
+            throw e
         }
     }
 }

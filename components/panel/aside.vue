@@ -4,7 +4,7 @@
       <i class="el-icon-user"></i>
       <span>Профіль</span>
     </el-menu-item>
-    <el-menu-item index="/catalog">
+    <el-menu-item index="/post">
       <i class="el-icon-goods"></i>
       <span>Каталог товарів</span>
     </el-menu-item>
