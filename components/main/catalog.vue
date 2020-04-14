@@ -1,15 +1,17 @@
 <template>
-  <el-card class="catalog" shadow="hover">
-    <header>
-      <h3>{{catalog.title}}</h3>
-    </header>
-    <div class="catalog_image">
-      <img :src="catalog.url_img" class="catalog_img" />
-    </div>
-    {{catalog.description}}
-    <el-button round @click="openPost">Открыть</el-button>
-    <footer>{{catalog.amount}}</footer>
-  </el-card>
+  <el-col :span="6">
+    <el-card class="catalog" shadow="hover">
+      <header>
+        <h3>{{catalog.title}}</h3>
+      </header>
+      <div class="catalog_image">
+        <img :src="catalog.url_img" class="catalog_img" />
+      </div>
+      {{catalog.description | description}}
+      <el-button round @click="openPost">Открыть</el-button>
+      <footer>{{catalog.amount}}</footer>
+    </el-card>
+  </el-col>
 </template>
 <script>
 export default {
@@ -19,6 +21,11 @@ export default {
     catalog: {
       type: Object,
       required: true
+    }
+  },
+  filters: {
+    description(val) {
+      return val.substring(0, 100);
     }
   },
   methods: {

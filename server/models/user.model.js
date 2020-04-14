@@ -28,7 +28,14 @@ const UserSchema = new Schema({
         type: String
     },
     admin: {
-        type: Number
+        type: Number,
+        required: true,
+        default: 0
+    },
+    ticket: {
+        type: Number,
+        required: true,
+        default: 0
     }
 })
 module.exports = model('user', UserSchema)

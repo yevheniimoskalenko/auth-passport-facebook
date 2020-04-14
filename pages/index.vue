@@ -8,7 +8,9 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  middleware: ["user"]
+};
 </script>
 <style lang="scss" scoped>
 .el-carousel__item h3 {

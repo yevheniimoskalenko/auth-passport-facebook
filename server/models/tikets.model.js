@@ -2,12 +2,10 @@ const { Schema, model } = require("mongoose")
 
 const tikets = new Schema({
     id_catalog: {
-        required: true,
-        type: String
+        type: Schema.Types.ObjectId, ref: 'catalog'
     },
     id_user: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId, ref: 'user'
     },
     number_tikets: {
         type: Number,

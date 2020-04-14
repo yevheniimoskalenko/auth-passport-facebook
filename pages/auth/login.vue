@@ -17,6 +17,7 @@
 </template>
 <script>
 export default {
+  middleware: ["user"],
   auth: false,
   head: {
     title: "Вхід на сайт"

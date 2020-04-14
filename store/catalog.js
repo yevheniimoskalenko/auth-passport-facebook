@@ -18,11 +18,18 @@ export const actions = {
     },
     async fetchById({ commit }, id) {
         try {
-            return await this.$axios.get(`/api/catalog/fetchById/${id}`)
-
+            return await this.$axios.$get(`/api/catalog/fetchById/${id}`)
         } catch (e) {
             commit("SetError", e, { root: true })
             throw e
         }
+    },
+    async fetchTikets({ commit }, payload) {
+        try {
+            return await this.$axios.$get(`/api/catalog/tikets/${payload}`)
+        } catch (e) {
+            commit("SetError", e, { root: true })
+        }
     }
+
 }

@@ -44,6 +44,7 @@
 <script>
 import { mask } from "vue-the-mask";
 export default {
+  middleware: ["user"],
   auth: false,
   directives: { mask },
   head: {
