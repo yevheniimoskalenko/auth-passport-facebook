@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt-nodejs')
 const keys = require("../keys")
 const salt = bcrypt.genSaltSync(10)
 module.exports.createUserForm = async (req, res) => {
-    const { email, password, name, adress, phoneNumber } = req.body
+    const { email, password, name, adress, phoneNumber, city } = req.body
     const candidat = await User.findOne({ email })
     if (candidat) {
         res.status(409).json({ message: "Користувач з електроною поштою, уже зареєстрований був раніше." })
@@ -13,8 +13,9 @@ module.exports.createUserForm = async (req, res) => {
             email,
             password: bcrypt.hashSync(password, salt),
             name,
-            adress,
-            phoneNumber
+            address: adress,
+            phoneNumber,
+            city
         })
         await user.save()
         return res.status(201).json(user)

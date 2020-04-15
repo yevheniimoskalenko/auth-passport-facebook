@@ -18,6 +18,12 @@
         <span>Створити товар</span>
       </el-menu-item>
     </template>
+    <template v-if="$auth.$state.user.admin === 1">
+      <el-menu-item index="/admin/hoax">
+        <i class="el-icon-trophy"></i>
+        <span>розіграш</span>
+      </el-menu-item>
+    </template>
     <el-menu-item index="/ticket">
       <i class="el-icon-bank-card"></i>
       <span>Придбати квитки</span>

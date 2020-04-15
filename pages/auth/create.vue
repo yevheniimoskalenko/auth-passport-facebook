@@ -11,9 +11,13 @@
       <el-form-item label="Ваше ПІП" prop="full_name">
         <el-input v-model="controls.full_name" placeholder="Іван Іванович Іванов"></el-input>
       </el-form-item>
-      <el-form-item label="Ваше місце проживання" prop="adress">
-        <el-input v-model="controls.adress" placeholder="місто Київ вул. Панаса Мирного"></el-input>
+      <el-form-item label="Місце проживання" prop="city">
+        <el-input v-model="controls.city" placeholder="м. Харків"></el-input>
       </el-form-item>
+      <el-form-item label="Номер відділу нової пошти" prop="adress">
+        <el-input v-model.number="controls.adress" placeholder="3"></el-input>
+      </el-form-item>
+
       <el-form-item label="Ваше номер телефону" prop="phoneNumber">
         <el-input
           v-model="controls.phoneNumber"
@@ -23,7 +27,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item prop="success_rules">
-        <el-checkbox label="Згоден з" name="checkbox" v-model="controls.success_rules"></el-checkbox>
+        <el-checkbox label="Згоден(на) з" name="checkbox" v-model="controls.success_rules"></el-checkbox>
         <el-button type="text" @click="dialogRules = true">правилами</el-button>
       </el-form-item>
       <el-form-item>
@@ -60,34 +64,61 @@ export default {
         full_name: "",
         success_rules: [],
         phoneNumber: "",
-        adress: ""
+        adress: "",
+        city: ""
       },
       rules: {
         email: [
-          { required: true, message: "Ведіть будь ласка електройти адрес." },
+          {
+            required: true,
+            message: "Ведіть будь ласка електройти адрес.",
+            trigger: "blur"
+          },
           {
             type: "email",
             message: "Будь ласка ведіть коректно електройний адрес.",
             trigger: ["blur", "change"]
           }
         ],
-        password: [{ required: true, message: "Ведіть будь ласка пароль." }],
+        password: [
+          {
+            required: true,
+            message: "Ведіть будь ласка пароль.",
+            trigger: "blur"
+          },
+          {
+            min: 6,
+            message: "Будь ласка пароль повинен містити як мінумум 6 символів",
+            trigger: "blur"
+          }
+        ],
         full_name: [
           {
             required: true,
-            message: "Ведіть будь ласка Ваше Прізвище Ім`я по-батькові"
+            message: "Ведіть будь ласка Ваше Прізвище Ім`я по-батькові",
+            trigger: "blur"
           }
         ],
         adress: [
           {
             required: true,
-            message: "Ведіть будь ласка адрес проживання"
+            message: "Ведіть будь ласка номер відділу",
+            trigger: "blur"
+          },
+          { type: "number", message: "age must be a number", trigger: "blur" }
+        ],
+        city: [
+          {
+            required: true,
+            message: "Ведіть будь ласка номер міста відділу нової пошти",
+            trigger: "blur"
           }
         ],
         phoneNumber: [
           {
             required: true,
-            message: "Ведіть будь ласка Ваший номере телефону"
+            message: "Ведіть будь ласка Ваший номере телефону",
+            trigger: "blur"
           }
         ],
         success_rules: [
@@ -111,7 +142,8 @@ export default {
             password: this.controls.password,
             name: this.controls.full_name,
             adress: this.controls.adress,
-            phoneNumber: this.controls.phoneNumber
+            phoneNumber: this.controls.phoneNumber,
+            city: this.controls.city
           };
           try {
             await this.$store.dispatch("Auth/createUser", dataForm);

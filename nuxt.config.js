@@ -30,12 +30,13 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/moment',
   ],
   /*
   ** Nuxt.js modules
@@ -43,6 +44,7 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth'
+
   ],
   router: {
     middleware: ['auth']

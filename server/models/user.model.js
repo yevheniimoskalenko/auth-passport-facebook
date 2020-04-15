@@ -22,7 +22,8 @@ const UserSchema = new Schema({
         type: String
     },
     address: {
-        type: String
+        type: Number,
+        required: true
     },
     phoneNumber: {
         type: String
@@ -36,6 +37,14 @@ const UserSchema = new Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 })
 module.exports = model('user', UserSchema)
