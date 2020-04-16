@@ -19,43 +19,27 @@ module.exports.fetchById = async (req, res) => {
     }
 }
 module.exports.buyTikets = async (req, res) => {
-    const { tikets, id_catalog, id } = req.body
+    const { _id, id_catalog } = req.body.ticket
+    // req.body.id
 
     try {
-        const candidat = await User.findOne({ _id: id })
+        const candidat = await User.findOne({ _id: req.body.id })
 
         const tiket = await Tikets.findOne({
             id_catalog: id_catalog,
-            number_tikets: tikets
-        }, { __v: 0 }).sort({ number_tikets: 1 })
-        if (!tiket && candidat.ticket >= tikets.length) {
-            await tikets.forEach((item) => {
-                const tiketbuy = new Tikets({
-                    id_catalog,
-                    id_user: id,
-                    number_tikets: item
-                })
-                tiketbuy.save()
-            });
-            await User.updateOne({ _id: id }, { $set: { ticket: candidat.ticket - tikets.length } })
-            return res.json({ "status": "success" })
+            _id
+        }, { __v: 0 })
+        if (tiket.isBuy === false && candidat.ticket >= 1) {
+            await Tikets.updateOne({ _id: tiket._id }, { $set: { isBuy: true, id_user: candidat._id } })
+            await User.updateOne({ _id: candidat._id }, { $set: { ticket: candidat.ticket - 1 } })
+            return res.json({ status: "Ok" })
         } else {
-
-            return res.status(401).json({ "status": "tiсket busy" })
+            return res.status(401).json({ message: "Квиток уже був придбаний раніше" })
         }
 
     } catch (e) {
 
         return res.send(501).json({ e })
-    }
-}
-module.exports.fetchByTicket = async (req, res) => {
-    const { id } = req.params
-    try {
-        const listTickets = await Tikets.find({ id_catalog: id }, { _id: 0, id_catalog: 0, id_user: 0, __v: 0 })
-            .sort({ number_tikets: 1 })
-        return res.json({ listTickets })
-    } catch (e) {
-        return res.send(501).json({ e })
+
     }
 }

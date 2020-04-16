@@ -1,5 +1,5 @@
 <template>
-  <el-col :span="6">
+  <el-col :span="12">
     <el-card class="catalog" shadow="hover">
       <header>
         <h3>{{catalog.title}}</h3>

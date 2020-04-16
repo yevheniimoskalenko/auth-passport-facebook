@@ -1,5 +1,6 @@
 const { Router } = require("express")
-const { all, fetchById, buyTikets, fetchByTicket } = require("../controllers/catalog")
+const { all, fetchById, buyTikets } = require("../controllers/catalog")
+const fetchByTicket = require("../controllers/tickets/fetchByTicket")
 const router = Router()
 
 router.get('/all', all)

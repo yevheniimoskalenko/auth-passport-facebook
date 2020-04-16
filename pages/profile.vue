@@ -1,61 +1,71 @@
 <template>
   <div>
     <el-card class="box-card" v-loading="loading">
-      <el-form ref="pass" :model="controls" class="form" :rules="rules">
-        <h3>Змінтити пароль</h3>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="Старий пароль" prop="password">
-              <el-input v-model="controls.password" type="password" placeholder show-password></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="Новий пароль" prop="newpassword">
-              <el-input v-model="controls.newpassword" type="password" placeholder show-password></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col>
-            <el-button @click="editPass" type="primary" plain>Змінити пароль</el-button>
-          </el-col>
-        </el-row>
-      </el-form>
-      <el-form ref="form" :model="controls" class="form" :rules="rules">
-        <h3>Змінити місце проживання</h3>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="Відділ нової пошти" prop="address">
-              <el-input v-model="controls.address" :placeholder="candidat.address"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="Місто нової пошти" prop="address">
-              <el-input v-model="controls.city" :placeholder="candidat.city"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <h3>Особисті данні:</h3>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="Номер телефону" prop="phoneNumber">
-              <el-input
-                v-model="controls.phoneNumber"
-                :placeholder="candidat.phoneNumber"
-                v-mask="'(0##)-###-##-##'"
-                type="tel"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="Прізвище Ім`я по-батькові" prop="fullname">
-              <el-input v-model="controls.fullname" :placeholder="candidat.name"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col>
-            <el-button @click="editData" type="primary" plain>Змінити дані</el-button>
-          </el-col>
-        </el-row>
+      <div class="br-form">
+        <el-form ref="pass" :model="controls" class="form" :rules="rules">
+          <h3>Змінтити пароль</h3>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="Старий пароль" prop="password">
+                <el-input v-model="controls.password" type="password" placeholder show-password></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="Новий пароль" prop="newpassword">
+                <el-input v-model="controls.newpassword" type="password" placeholder show-password></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col>
+              <el-button @click="editPass" type="primary" plain round>Змінити пароль</el-button>
+            </el-col>
+          </el-row>
+        </el-form>
+      </div>
+      <div class="br-form">
+        <el-form ref="form" :model="controls" class="form" :rules="rules">
+          <h3>Змінити місце проживання</h3>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="Відділ нової пошти" prop="address">
+                <el-input v-model="controls.address" :placeholder="candidat.address"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="Місто нової пошти" prop="address">
+                <el-input v-model="controls.city" :placeholder="candidat.city"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <h3>Особисті данні:</h3>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="Номер телефону" prop="phoneNumber">
+                <el-input
+                  v-model="controls.phoneNumber"
+                  :placeholder="candidat.phoneNumber"
+                  v-mask="'(0##)-###-##-##'"
+                  type="tel"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="Прізвище Ім`я по-батькові" prop="fullname">
+                <el-input v-model="controls.fullname" :placeholder="candidat.name"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col>
+              <el-button @click="editData" type="primary" plain round>Змінити дані</el-button>
+            </el-col>
+          </el-row>
+        </el-form>
+      </div>
+      <div class="br-form">
         <span>Коли ви були зареєстровані: {{$moment(candidat.date).format('YYYY-MM-DD HH:mm:ss')}}</span>
-      </el-form>
+        <span>
+          Кількість квитків:
+          <b>{{candidat.ticket}}</b>
+        </span>
+      </div>
     </el-card>
   </div>
 </template>
@@ -149,7 +159,10 @@ export default {
           try {
             await this.$store.dispatch("user/editData", formData);
             this.$message.success("Дані були змінені!");
-            this.controls;
+            this.controls.address = "";
+            this.controls.city = "";
+            this.controls.phoneNumber = "";
+            this.controls.fullname = "";
           } catch (e) {}
           this.loading = false;
         }
@@ -159,4 +172,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.br-form {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+}
 </style>

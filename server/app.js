@@ -6,6 +6,8 @@ const app = express()
 const admin = require("./routes/admin")
 const catalog = require('./routes/catalog')
 const setting = require("./routes/seettings.routes")
+var _ = require('lodash');
+
 mongose.connect("mongodb+srv://yevhenii:was123456789was@cluster0-vrxpp.mongodb.net/test", {
     useNewUrlParser: true, useUnifiedTopology: true
 }).then(() => console.log(`connect has started..`))

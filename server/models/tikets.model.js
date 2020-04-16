@@ -10,6 +10,10 @@ const tikets = new Schema({
     number_tikets: {
         type: Number,
         required: true
+    },
+    isBuy: {
+        type: Boolean,
+        default: false
     }
 })
 module.exports = model('tikets', tikets)

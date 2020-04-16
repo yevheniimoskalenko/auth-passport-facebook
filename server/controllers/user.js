@@ -8,7 +8,7 @@ const Catalog = require("../models/catalog.model")
 
 module.exports.load = async (req, res) => {
     try {
-        const candidat = await User.findOne({ _id: req.params.id }, { ticket: 0, admin: 0, _id: 0, __v: 0 })
+        const candidat = await User.findOne({ _id: req.params.id }, { admin: 0, _id: 0, __v: 0 })
         return res.json(candidat)
     } catch (e) {
         res.status(500).json(e)
