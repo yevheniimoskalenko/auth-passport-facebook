@@ -17,6 +17,15 @@ const catalog = new Schema({
     url_img: {
         type: String,
         required: true
-    }
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    },
+    isDisabled: {
+        type: Boolean,
+        default: false
+    },
+
 })
 module.exports = model('catalog', catalog)

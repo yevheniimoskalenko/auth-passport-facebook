@@ -34,7 +34,7 @@ module.exports.buyTikets = async (req, res) => {
             await User.updateOne({ _id: candidat._id }, { $set: { ticket: candidat.ticket - 1 } })
             return res.json({ status: "Ok" })
         } else {
-            return res.status(401).json({ message: "Квиток уже був придбаний раніше" })
+            return res.status(401).json({ message: "У вас закінчилися квитки для покупки" })
         }
 
     } catch (e) {
