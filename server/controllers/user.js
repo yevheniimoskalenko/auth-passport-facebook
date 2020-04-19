@@ -16,8 +16,12 @@ module.exports.load = async (req, res) => {
 }
 module.exports.mygames = async (req, res) => {
     try {
-        const games = await Tickets.find({ id_user: req.params.id }, { _id: 0, __v: 0, id_user: 0 }).sort({ number_tikets: 1 })
-        return res.json(games)
+        // const games = await Tickets.find({ id_user: req.params.id }, { _id: 0, __v: 0, id_user: 0 }).sort({ number_tikets: 1 })
+        await Tickets.find({ id_user: req.params.id })
+            .populate('id_catalog')
+            .exec(function (err, tickets) {
+                return res.json(tickets)
+            });
     } catch (e) {
         res.status(500).json(e)
     }

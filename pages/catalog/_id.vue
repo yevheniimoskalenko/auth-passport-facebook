@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card>
+    <el-card v-infinite-scroll="load" infinite-scroll-disabled="disabled">
       <div class="card__img">
         <img :src="post.url_img" class="image" />
       </div>
@@ -16,6 +16,8 @@
             <div class="ticket">
               <el-button @click="buy(ticket)" :disabled="ticket.isBuy">{{ticket.number_tikets}}</el-button>
             </div>
+            <p v-if="loading">Loading...</p>
+            <p v-if="noMore">No more</p>
           </el-col>
         </el-row>
       </div>
@@ -34,17 +36,33 @@ export default {
   },
   layout: "panel",
   middleware: ["auth"],
-  head: {
-    // title: `${this.catalog.title}`
+  head() {
+    return {
+      title: `${this.post.title}`
+    };
   },
   data() {
     return {
-      activeButton: []
+      activeButton: [],
+      loading: false
     };
+  },
+  computed: {
+    noMore() {
+      return this.count >= 20;
+    },
+    disabled() {
+      return this.loading || this.noMore;
+    }
   },
   methods: {
     addtiket(tiket) {
       this.activeButton.push(tiket);
+    },
+    load() {
+      this.loading = true;
+      console.log("1");
+      this.loading = false;
     },
     async buy(val) {
       const Data = {
