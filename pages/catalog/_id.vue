@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card v-infinite-scroll="load" infinite-scroll-disabled="disabled">
+    <el-card v-infinite-scroll="load" infinite-scroll-delay="500">
       <div class="card__img">
         <img :src="post.url_img" class="image" />
       </div>
@@ -16,8 +16,6 @@
             <div class="ticket">
               <el-button @click="buy(ticket)" :disabled="ticket.isBuy">{{ticket.number_tikets}}</el-button>
             </div>
-            <p v-if="loading">Loading...</p>
-            <p v-if="noMore">No more</p>
           </el-col>
         </el-row>
       </div>
@@ -48,20 +46,35 @@ export default {
     };
   },
   computed: {
-    noMore() {
-      return this.count >= 20;
-    },
-    disabled() {
-      return this.loading || this.noMore;
-    }
+    // noMore() {
+    //   // return this.tickets >= 200;
+    // },
+    // disabled() {
+    //   return this.loading || this.noMore;
+    // }
   },
   methods: {
     addtiket(tiket) {
       this.activeButton.push(tiket);
     },
-    load() {
+    async load() {
       this.loading = true;
-      console.log("1");
+      const Data = {
+        id: this.$route.params.id,
+        page: this.$route.query.page
+      };
+
+      try {
+        const data = await this.$store.dispatch(
+          "catalog/fetchPageTickets",
+          Data
+        );
+        this.$route.query.page++;
+        this.tickets = this.tickets.concat(data);
+        if (this.tickets.length == 0) {
+          console.log(null);
+        }
+      } catch (e) {}
       this.loading = false;
     },
     async buy(val) {
@@ -71,7 +84,6 @@ export default {
       };
       try {
         await this.$store.dispatch("tiket/buyTiket", Data);
-
         this.activeButton = [];
       } catch (e) {
         console.log(e);

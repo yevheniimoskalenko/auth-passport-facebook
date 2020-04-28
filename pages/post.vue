@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import AppCatalog from "@/components/main/Catalog";
+import AppCatalog from "@/components/main/catalog";
 export default {
   layout: "panel",
   middleware: ["auth"],

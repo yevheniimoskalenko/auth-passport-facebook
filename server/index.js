@@ -3,7 +3,7 @@ const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const app = require("./app")
 
-// Import and Set Nuxt.js options
+// Import and Set Nuxt.js optionsw
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
 

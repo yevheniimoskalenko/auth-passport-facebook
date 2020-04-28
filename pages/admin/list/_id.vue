@@ -33,7 +33,6 @@
   </div>
 </template>
 <script>
-import $ from "jquery";
 export default {
   layout: "panel",
   middleware: ["auth", "admin"],

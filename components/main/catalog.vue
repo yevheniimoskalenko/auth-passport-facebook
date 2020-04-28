@@ -31,7 +31,11 @@ export default {
   methods: {
     openPost() {
       const id = this.catalog._id;
-      this.$router.push(`/catalog/${id}`);
+      this.$router.push({
+        name: "catalog-id",
+        params: { id: id },
+        query: { page: 1 }
+      });
     }
   }
 };
