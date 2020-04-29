@@ -1,5 +1,15 @@
 <template>
-  <el-menu router :style="{height: '100%'}" :default-active="$route.path">
+  <el-menu
+    router
+    :style="{height: '100%'}"
+    class="el-menu-vertical-demo"
+    :collapse="isCollapse"
+    :default-active="$route.path"
+  >
+    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
+      <el-radio-button :label="false">expand</el-radio-button>
+      <el-radio-button :label="true">collapse</el-radio-button>
+    </el-radio-group>
     <el-menu-item index="/profile">
       <i class="el-icon-user"></i>
       <span>Профіль</span>
@@ -37,6 +47,11 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      isCollapse: true
+    };
+  },
   methods: {
     async logout() {
       await this.$auth.logout();
@@ -45,4 +60,10 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+</style>
 

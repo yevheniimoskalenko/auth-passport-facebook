@@ -69,7 +69,11 @@ export default {
           "catalog/fetchPageTickets",
           Data
         );
-        this.$route.query.page++;
+        console.log(this.$route.query.page);
+        this.$router.push(
+          `${this.$route.path}?page=${this.$route.query.page++}`
+        );
+
         this.tickets = this.tickets.concat(data);
         if (this.tickets.length == 0) {
           console.log(null);

@@ -27,10 +27,8 @@ module.exports.page = async (req, res) => {
   const perPage = 100;
   const {
     id,
-    page
+    page = 2
   } = req.params;
-
-  id || 2
   try {
     const data = await Tikets.find({
       id_catalog: id
